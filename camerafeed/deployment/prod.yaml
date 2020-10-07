@@ -1,0 +1,115 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: Camera-1
+spec:
+  selector:
+    matchLabels:
+      run: Camera-1
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        run: Camera-1
+    spec:
+      terminationGracePeriodSeconds: 0
+      containers:
+        - name: camerafeed
+          image: __CI_REGISTRY_IMAGE__:__VERSION__
+          imagePullPolicy: Always
+          env:
+          - name: CAMERA_IP
+            value: "RTSP_URL"
+          - name: CAMERA_NAME
+            value: "Camera-1"
+          - name: CAPTURE_FPS
+            value: "15"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: Camera-2
+spec:
+  selector:
+    matchLabels:
+      run: Camera-2
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        run: Camera-2
+    spec:
+      terminationGracePeriodSeconds: 0
+      containers:
+        - name: camerafeed
+          image: __CI_REGISTRY_IMAGE__:__VERSION__
+          imagePullPolicy: Always
+          env:
+          - name: CAMERA_IP
+            value: "RTSP_URL"
+          - name: CAMERA_NAME
+            value: "Camera-2"
+          - name: CAPTURE_FPS
+            value: "15"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: Camera-3
+spec:
+  selector:
+    matchLabels:
+      run: Camera-3
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        run: Camera-3
+    spec:
+      terminationGracePeriodSeconds: 0
+      containers:
+        - name: camerafeed
+          image: __CI_REGISTRY_IMAGE__:__VERSION__
+          imagePullPolicy: Always
+          env:
+          - name: CAMERA_IP
+            value: "RTSP_URL"
+          - name: CAMERA_NAME
+            value: "Camera-3"
+          - name: CAPTURE_FPS
+            value: "15"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: Camera-4
+spec:
+  selector:
+    matchLabels:
+      run: Camera-4
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        run: Camera-4
+    spec:
+      terminationGracePeriodSeconds: 0
+      containers:
+        - name: camerafeed
+          image: __CI_REGISTRY_IMAGE__:__VERSION__
+          imagePullPolicy: Always
+          env:
+          - name: CAMERA_IP
+            value: "RTSP_URL"
+          - name: CAMERA_NAME
+            value: "Camera-4"
+          - name: CAPTURE_FPS
+            value: "15"

@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: messenger
+spec:
+  selector:
+    matchLabels:
+      run: messenger
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        run: messenger
+    spec:
+      containers:
+        - name: detectmessage
+          image: __CI_REGISTRY_IMAGE__:__VERSION__
+          imagePullPolicy: Always
+          env:
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: DELAY
+            value: "35"
+          - name: SLACK_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: slack-token
+                key: token

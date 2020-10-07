@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: person-detector
+  labels:
+    env: person-detector
+spec:
+  selector:
+    matchLabels:
+      app: person-detector
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: person-detector
+    spec:
+      containers:
+        - name: person-detector
+          image: __CI_REGISTRY_IMAGE__:__VERSION__
+          imagePullPolicy: "Always"
+          env:
+            - name: CONFIDENCE_SCORE
+              value: "0.89"
+            - name: LOW_CONFIDENCE_SCORE
+              value: "0.89"
+            - name: HIGH_CONFIDENCE_SCORE
+              value: "0.95"
+            - name: STREAM_THREADS
+              value: "1"
+            - name: UPDATE_THREADS
+              value: "2"
+            - name: POD_NAME
+              value: "person-detector"
+          volumeMounts:
+            - mountPath: /dev/bus/usb/002/005
+              name: edgetpu
+          securityContext:
+            privileged: true
+      volumes:
+        - name: edgetpu
+          hostPath:
+            path: /dev/bus/usb/002/005
+      nodeSelector:
+        edgetpu: present
+      tolerations:
+        - key: "edgetpu"
+          operator: "Equal"
+          value: "present"
+          effect: "NoSchedule"
+      imagePullSecrets:
+        - name: regcred

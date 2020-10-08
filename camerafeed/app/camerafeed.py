@@ -43,7 +43,7 @@ class RedisMessages:
 
     def __init__(self, redis_connection):
         self.redis_conection = redis_connection
-        self. prev = 0
+        self.prev = 0
         self.time_elapsed = time()
 
     def build_message(self, image):
